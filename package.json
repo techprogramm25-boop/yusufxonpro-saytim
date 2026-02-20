@@ -1,15 +1,18 @@
 {
-  "name": "yusufxon-portfolio",
+  "name": "yusufxon-daho-portfolio",
   "private": true,
   "version": "1.0.0",
-  "description": "Daho dasturchi Yusufxonning shaxsiy portfoliosi",
+  "type": "module",
   "scripts": {
-    "start": "echo 'Sayt ishga tushmoqda...'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [
-    "portfolio",
-    "daho",
-    "yusufxon"
-  ],
-  "author": "Yusufxon Axmatov"
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "aos": "^2.3.4"
+  }
 }
