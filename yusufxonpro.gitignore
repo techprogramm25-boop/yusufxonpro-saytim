@@ -1,6 +1,23 @@
+# Kutubxonalar (Bularni yuklash shart emas, chunki package.json orqali qayta yuklab olsa bo'ladi)
 node_modules/
-.DS_Store
 dist/
 dist-ssr/
-
 *.local
+
+# Operatsion tizim fayllari (Keraksiz axlat fayllar)
+.DS_Store
+Thumbs.db
+
+# IDE (Dasturlash muhiti) sozlamalari
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Loglar
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
