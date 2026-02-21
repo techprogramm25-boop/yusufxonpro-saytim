@@ -1,11 +1,65 @@
-<div id="loader">
-    <div class="loader-ring"></div>
-    <span class="char b">B</span>
-    <span class="char x">✕</span>
-    <span class="char y">Y</span>
-    <div class="f-name">YUSUFXON AXMATOV</div>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusufxon Axmatov | Daho Dev Portfolio</title>
     
-    <div id="enter-site" style="display:none; margin-top: 30px; text-align: center; z-index: 10001;">
-        <a href="https://yusufxonpro-loading.vercel.app/" class="btn" style="background: var(--accent); color: var(--bg); border: none; padding: 20px 40px; font-size: 20px;">MENING SAYTIM</a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-ring"></div>
+        <span class="char b">B</span>
+        <span class="char x">✕</span>
+        <span class="char y">Y</span>
+        <div class="f-name">YUSUFXON AXMATOV</div>
+        
+        <div id="daho-entry" style="display:none; margin-top: 50px; text-align: center; z-index: 10001;">
+            <a href="https://yusufxonpro-loading.vercel.app/" class="btn premium-btn">MENING SAYTIM</a>
+        </div>
     </div>
-</div>
+
+    <div class="term-icon" onclick="toggleAdmin()"><i class="fas fa-terminal"></i></div>
+    <div id="admin-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="color:white; font-family:monospace;">> Daho Terminal v2.0</h2>
+            <i class="fas fa-times" style="color:var(--accent); cursor:pointer; font-size: 30px;" onclick="toggleAdmin()"></i>
+        </div>
+        <button class="btn" onclick="openVault()" style="margin-top:20px">TERMINALGA_KIRISH</button>
+        <div id="logs" style="margin-top:40px; display:none; color:var(--accent); font-family:monospace;">
+            <p>> Ma'lumotlar bazasi ulanmoqda...</p>
+            <div id="msg-list" style="color:white; margin-top:20px"></div>
+        </div>
+    </div>
+
+    <div class="side side-l">
+        <div class="social">
+            <a href="https://github.com/techprogramm25-boop" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/yusufxonpro/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/Musilmana_y_a_xmat0v777" target="_blank"><i class="fab fa-telegram"></i></a>
+        </div>
+        <div class="v-line"></div>
+    </div>
+
+    <div class="side side-r">
+        <p style="writing-mode: vertical-rl; margin-bottom: 25px; color: var(--accent); font-family: monospace; letter-spacing: 2px;">techprogramm25@gmail.com</p>
+        <div class="v-line"></div>
+    </div>
+
+    <div id="content" style="display: none;"> <section id="hero" data-aos="fade-up">
+            <p class="num">Assalomu alaykum, men —</p>
+            <h1 class="title">Yusufxon Axmatov.</h1>
+            <h2 class="title" style="color:var(--text); font-size: clamp(25px, 5vw, 45px);">Men daho dasturchiman.</h2>
+            <p style="max-width: 650px; font-size: 20px; line-height: 1.6;">Men 10 yoshdaman va Jizzaxdan turib butun dunyo uchun eng aqlli dasturlarni yozaman. Kod yozish — mening hayotim.</p>
+            <div style="margin-top:40px;"><a href="#history" class="btn">Daho bilan tanishing</a></div>
+        </section>
+        </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
