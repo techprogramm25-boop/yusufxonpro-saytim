@@ -3,63 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusufxon Axmatov | Daho Dev Portfolio</title>
+    <title>YusufxonPro | Rasmiy Portfoli</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { blue: '#0062ff', dark: '#030712' }
+                    }
+                }
+            }
+        }
+    </script>
 
-    <div id="loader">
-        <div class="loader-ring"></div>
-        <span class="char b">B</span>
-        <span class="char x">✕</span>
-        <span class="char y">Y</span>
-        <div class="f-name">YUSUFXON AXMATOV</div>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         
-        <div id="daho-entry" style="display:none; margin-top: 50px; text-align: center; z-index: 10001;">
-            <a href="https://yusufxonpro-loading.vercel.app/" class="btn premium-btn">MENING SAYTIM</a>
-        </div>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #030712; 
+            color: #f8fafc; 
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        body.loaded { opacity: 1; }
+        
+        .glass { 
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2.5rem;
+        }
+
+        #loading-screen {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .loading-logo {
+            font-size: 4rem; font-weight: 800; color: #fff;
+            animation: pulse-logo 2s ease infinite;
+        }
+        @keyframes pulse-logo { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } }
+
+        .side-icon {
+            position: fixed; z-index: 5; opacity: 0.1; font-size: 4rem;
+            animation: floatUpDown 12s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-70px) rotate(30deg); }
+        }
+
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .video-container { transition: all 0.6s ease; border: 1px solid rgba(255,255,255,0.05); }
+        .video-container:hover { transform: scale(1.02); border-color: #0062ff; box-shadow: 0 30px 60px rgba(0,98,255,0.25); }
+        
+        .social-btn { transition: all 0.3s ease; }
+        .social-btn:hover { transform: translateY(-5px); }
+
+        .repo-card { transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.05); }
+        .repo-card:hover { border-color: #0062ff; background: rgba(0, 98, 255, 0.1); transform: translateY(-5px); }
+    </style>
+</head>
+<body x-data="{ 
+    githubRepos: [],
+    init() {
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; document.body.classList.add('loaded'); }, 800);
+        }, 2500);
+
+        // Faqat eng oxirgi 6 ta repozitariyni olish
+        fetch('https://api.github.com/users/techprogramm25-boop/repos?sort=updated')
+            .then(res => res.json())
+            .then(data => { this.githubRepos = data.slice(0, 6); });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+}">
+
+    <div id="loading-screen">
+        <div class="loading-logo italic uppercase tracking-tighter">Yusufxon<span class="text-brand-blue">Pro</span></div>
+        <div class="text-slate-500 font-bold tracking-widest mt-4 uppercase text-xs">Tizim Yuklanmoqda...</div>
     </div>
 
-    <div class="term-icon" onclick="toggleAdmin()"><i class="fas fa-terminal"></i></div>
-    <div id="admin-panel">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="color:white; font-family:monospace;">> Daho Terminal v2.0</h2>
-            <i class="fas fa-times" style="color:var(--accent); cursor:pointer; font-size: 30px;" onclick="toggleAdmin()"></i>
-        </div>
-        <button class="btn" onclick="openVault()" style="margin-top:20px">TERMINALGA_KIRISH</button>
-        <div id="logs" style="margin-top:40px; display:none; color:var(--accent); font-family:monospace;">
-            <p>> Ma'lumotlar bazasi ulanmoqda...</p>
-            <div id="msg-list" style="color:white; margin-top:20px"></div>
-        </div>
-    </div>
+    <i class="fas fa-laptop side-icon left-10 top-1/4"></i>
+    <i class="fas fa-code side-icon right-10 top-1/3"></i>
+    <i class="fas fa-terminal side-icon left-20 bottom-1/4"></i>
+    <i class="fas fa-globe side-icon right-20 bottom-1/3"></i>
 
-    <div class="side side-l">
-        <div class="social">
-            <a href="https://github.com/techprogramm25-boop" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.instagram.com/yusufxonpro/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://t.me/Musilmana_y_a_xmat0v777" target="_blank"><i class="fab fa-telegram"></i></a>
+    <nav class="fixed top-0 w-full z-[100] glass py-5 px-10 mt-6 max-w-6xl left-1/2 -translate-x-1/2">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-brand-blue rounded-2xl flex items-center justify-center font-extrabold text-white text-xl shadow-lg shadow-blue-500/50">Y</div>
+                <span class="text-2xl font-black uppercase tracking-tighter">YUSUFXON<span class="text-brand-blue">PRO</span></span>
+            </div>
+            <div class="hidden lg:flex gap-10 text-[11px] font-extrabold uppercase tracking-[0.2em] text-slate-400">
+                <a href="#home" class="hover:text-white transition">Asosiy</a>
+                <a href="#github" class="hover:text-white transition">Loyihalar</a>
+                <a href="#youtube" class="hover:text-white transition">YouTube</a>
+                <a href="#instagram" class="hover:text-white transition">Instagram</a>
+                <a href="#about" class="hover:text-white transition">Haqimda</a>
+            </div>
+            <button onclick="confetti()" class="bg-brand-blue text-white px-8 py-3 rounded-full text-xs font-black uppercase hover:scale-105 transition">🚀</button>
         </div>
-        <div class="v-line"></div>
-    </div>
+    </nav>
 
-    <div class="side side-r">
-        <p style="writing-mode: vertical-rl; margin-bottom: 25px; color: var(--accent); font-family: monospace; letter-spacing: 2px;">techprogramm25@gmail.com</p>
-        <div class="v-line"></div>
-    </div>
-
-    <div id="content" style="display: none;"> <section id="hero" data-aos="fade-up">
-            <p class="num">Assalomu alaykum, men —</p>
-            <h1 class="title">Yusufxon Axmatov.</h1>
-            <h2 class="title" style="color:var(--text); font-size: clamp(25px, 5vw, 45px);">Men daho dasturchiman.</h2>
-            <p style="max-width: 650px; font-size: 20px; line-height: 1.6;">Men 10 yoshdaman va Jizzaxdan turib butun dunyo uchun eng aqlli dasturlarni yozaman. Kod yozish — mening hayotim.</p>
-            <div style="margin-top:40px;"><a href="#history" class="btn">Daho bilan tanishing</a></div>
-        </section>
+    <section id="home" class="min-h-screen flex items-center justify-center pt-24 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="reveal">
+                <h1 class="text-7xl lg:text-9xl font-black leading-[0.85] mb-8 uppercase italic">YUSUFXON <br><span class="text-brand-blue">PRO.</span></h1>
+                <p class="text-2xl text-slate-400 leading-relaxed mb-12 max-w-xl">
+                    Jizzaxlik professional dasturchi va VBloger. Kelajak texnologiyalarini bugun yaratyapman.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#github" class="bg-white text-black px-12 py-6 rounded-3xl font-black hover:bg-brand-blue hover:text-white transition-all duration-500 shadow-2xl uppercase tracking-wider">Loyihalarni Ko'rish</a>
+                    <a href="https://t.me/YusufxonPro1" target="_blank" class="glass px-12 py-6 rounded-3xl font-black transition-all uppercase tracking-wider border-2 border-white/10 text-center">Telegram</a>
+                </div>
+            </div>
+            <div class="relative reveal">
+                <div class="absolute -inset-10 bg-brand-blue/30 blur-[120px] rounded-full animate-pulse"></div>
+                <img src="https://i.postimg.cc/gcZ56SRY/abotme.png" class="relative rounded-[5rem] border border-white/10 shadow-2xl w-full h-[650px] object-cover">
+            </div>
         </div>
+    </section>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <section id="github" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto reveal">
+            <h2 class="text-6xl font-black uppercase italic mb-16 italic">Top <span class="text-brand-blue">Loyihalar</span></h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="repo in githubRepos" :key="repo.id">
+                    <div class="repo-card glass p-10 flex flex-col justify-between h-[300px]">
+                        <div>
+                            <h3 class="text-2xl font-black text-white mb-4 truncate italic uppercase" x-text="repo.name"></h3>
+                            <p class="text-slate-400 text-sm line-clamp-3" x-text="repo.description || 'GitHub loyihasi haqida ma\'lumot.'"></p>
+                        </div>
+                        <a :href="repo.html_url" target="_blank" class="text-brand-blue font-black text-xs uppercase tracking-widest hover:underline">Kodni ko'rish →</a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <section id="youtube" class="py-32 px-6 relative z-10 bg-white/[0.01]">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-6xl lg:text-7xl font-black uppercase italic mb-16 text-center">YouTube <span class="text-red-600">Video</span></h2>
+            <div class="video-container glass overflow-hidden shadow-[0_0_50px_rgba(255,0,0,0.2)]">
+                <div class="aspect-video">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/ckXcvDbJGuo" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="instagram" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto reveal">
+            <h2 class="text-6xl font-black uppercase italic text-center mb-20 italic">Instagram <span class="text-brand-blue">Reels</span></h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DW611U6Alvq/embed" class="w-full h-full" frameborder="0"></iframe></div>
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DTu8gXuiM1k/embed" class="w-full h-full" frameborder="0"></iframe></div>
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DWmfk27AjJa/embed" class="w-full h-full" frameborder="0"></iframe></div>
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DWwLrBOgrmo/embed" class="w-full h-full" frameborder="0"></iframe></div>
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DW6tf6NAln2/embed" class="w-full h-full" frameborder="0"></iframe></div>
+                <div class="video-container glass overflow-hidden h-[600px]"><iframe src="https://www.instagram.com/p/DWk-lspglZv/embed" class="w-full h-full" frameborder="0"></iframe></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-32 px-6 relative z-10">
+        <div class="max-w-6xl mx-auto glass p-12 lg:p-24 reveal border-2 border-brand-blue/20">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10">
+                    <h2 class="text-7xl font-black uppercase italic leading-none">Men <br><span class="text-brand-blue">Haqimda.</span></h2>
+                    <p class="text-2xl text-slate-300 leading-relaxed">
+                        Mening ismim <span class="text-white font-bold">Yusufxon Axmatov</span>. 2015-yilda Jizzaxda tug'ilganman. Professional dasturlash va dizayn bilan shug'ullanaman.
+                    </p>
+                    <div class="flex flex-col gap-4">
+                        <div class="flex items-center gap-6 glass p-6 border-white/10 hover:border-brand-blue transition">
+                            <i class="fas fa-envelope text-brand-blue text-2xl"></i>
+                            <span class="font-bold tracking-tight">techprogramm25@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <a href="https://youtube.com/@yusufxonpro" target="_blank" class="social-btn glass p-10 text-center hover:bg-red-600 transition shadow-lg"><i class="fab fa-youtube text-4xl mb-4"></i><br><span class="text-[10px] font-black uppercase">YouTube</span></a>
+                    <a href="https://instagram.com/yusufxonpro" target="_blank" class="social-btn glass p-10 text-center hover:bg-pink-600 transition shadow-lg"><i class="fab fa-instagram text-4xl mb-4"></i><br><span class="text-[10px] font-black uppercase">Instagram</span></a>
+                    <a href="https://t.me/YusufxonPro1" target="_blank" class="social-btn glass p-10 text-center hover:bg-blue-600 transition shadow-lg"><i class="fab fa-telegram text-4xl mb-4"></i><br><span class="text-[10px] font-black uppercase">Telegram</span></a>
+                    <a href="https://github.com/techprogramm25-boop" target="_blank" class="social-btn glass p-10 text-center hover:bg-slate-800 transition shadow-lg"><i class="fab fa-github text-4xl mb-4"></i><br><span class="text-[10px] font-black uppercase">GitHub</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-white/5 text-center reveal">
+        <div class="mb-10">
+            <span class="text-5xl font-black uppercase tracking-tighter italic">YUSUFXON<span class="text-brand-blue">PRO</span></span>
+        </div>
+        <p class="text-[10px] text-slate-500 uppercase tracking-[0.5em]">
+            © 2026 Jizzax, O'zbekiston. Created by Yusufxon Axmatov.
+        </p>
+    </footer>
+
 </body>
 </html>
